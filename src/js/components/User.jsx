@@ -29,7 +29,7 @@ var User = React.createClass({
     fetchData: function() {
         var that = this; // What's this?? Make sure you remember or understand what this line does
         
-        $.getJSON(`https://api.github.com/users/${this.props.params.username}` + `?access_token=fea7928428c0e732d06ded75eb1a7611cc4d74f8`)
+        $.getJSON(`https://api.github.com/users/${this.props.params.username}?access_token=fea7928428c0e732d06ded75eb1a7611cc4d74f8`)
             .then(
                 function(user) {
                     // Why that.setState instead of this.setState??
@@ -43,7 +43,6 @@ var User = React.createClass({
         this.fetchData();
     },
     componentDidUpdate: function(){
-        console.log("component did mount state", this.state);
         if(this.state.user.username !== this.props.params.username) {
             this.fetchData();
         }
