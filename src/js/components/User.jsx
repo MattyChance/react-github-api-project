@@ -26,10 +26,10 @@ var User = React.createClass({
     the data -- in the callback -- we call `setState` to put the user data in our state. This will trigger a re-render.
     When `render` gets called again, `this.state.user` exists and we get the user info display instead of "LOADING..."
     */
-    componentDidMount: function() {
+    fetchData: function() {
         var that = this; // What's this?? Make sure you remember or understand what this line does
         
-        $.getJSON(`https://api.github.com/users/${this.props.params.username}`)
+        $.getJSON(`https://api.github.com/users/${this.props.params.username}` + `?access_token=fea7928428c0e732d06ded75eb1a7611cc4d74f8`)
             .then(
                 function(user) {
                     // Why that.setState instead of this.setState??
@@ -38,6 +38,15 @@ var User = React.createClass({
                     });
                 }
             );
+    },
+    componentDidMount: function(username) {
+        this.fetchData();
+    },
+    componentDidUpdate: function(){
+        console.log("component did mount state", this.state);
+        if(this.state.user.username !== this.props.params.username) {
+            this.fetchData();
+        }
     },
     /*
     This method is used as a mapping function. Eventually this could be factored out to its own component.
@@ -59,24 +68,26 @@ var User = React.createClass({
         }
         
         // If we get to this part of `render`, then the user is loaded
-        var user = this.state.user;
+        var {user} = this.state;
         
         // Gather up some number stats about the user, to be used in a map below
+        //using es6 destructuring
+        var {username} = this.props.params;
         var stats = [
             {
                 name: 'Public Repos',
                 value: user.public_repos,
-                url: `/user/${this.props.params.username}/repos`
+                url: `/user/${username}/repos`
             },
             {
                 name: 'Followers',
                 value: user.followers,
-                url: `/user/${this.props.params.username}/followers`
+                url: `/user/${username}/followers`
             },
             {
                 name: 'Following',
                 value: user.following,
-                url: `/user/${this.props.params.username}/following`
+                url: `/user/${username}/following`
             }
         ];
         
@@ -93,7 +104,13 @@ var User = React.createClass({
                     <ul className="user-info__stats">
                         {stats.map(this.renderStat)}              
                     </ul>
+
                 </div>
+
+                <div> 
+                    {this.props.children}            
+                </div>
+
             </div>
         );
     }

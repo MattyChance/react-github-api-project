@@ -4,7 +4,7 @@
   "description": "Create a GitHub browser using React and the GitHub API",
   "main": "server.js",
   "keywords": ["react","github"],
-  "author": "Ziad Saab <ziad.saab@gmail.com>",
+  "author": "MattyC <chenmatty.wang@gmail.com>",
   "license": "MIT",
   "scripts": {
     "dev": "webpack --watch"

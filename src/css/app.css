@@ -105,3 +105,19 @@ h1,h2,h3,h4,h5,h6 {
     margin: 0;
     white-space: nowrap;
 }
+
+.followers-list {
+    padding-left: 0;
+}
+
+.followers-list li {
+    list-style-type: none;
+    margin: 1em 0em;
+}
+.followers-list img{
+    border-radius: 50%;
+    max-width: 3em;
+    max-height: 3em;
+    vertical-align: middle;
+    padding-right: 0.5em;
+}
